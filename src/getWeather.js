@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/no-mutable-exports
+let myObj;
+
 async function getWeather(location) {
   const response = await fetch(
     `http://api.openweathermap.org/data/2.5/weather?q=${location}&limit=5&appid=7a6a3e9c8867bc5ec1c7bac3aea201d9&units=imperial`,
@@ -8,8 +11,8 @@ async function getWeather(location) {
   console.log(locationData.main, locationData.weather);
 
   class Weather {
-    constructor(location, temperature, feelsLike, forecast) {
-      this.location = location;
+    constructor(qLocation, temperature, feelsLike, forecast) {
+      this.qLocation = qLocation;
       this.temperature = temperature;
       this.feelsLike = feelsLike;
       this.forecast = forecast;
@@ -17,13 +20,14 @@ async function getWeather(location) {
   }
 
   async function createWeatherObject() {
-    const location = locationData.name;
-    const temperature = locationData.main.temp;
-    const feelsLike = locationData.main.feels_like;
+    const qLocation = locationData.name;
+    const temperature = Math.round(locationData.main.temp);
+    const feelsLike = Math.round(locationData.main.feels_like);
     const forecast = locationData.weather[0].description;
-    const newObj = new Weather(location, temperature, feelsLike, forecast);
-    console.log(newObj);
+    myObj = new Weather(qLocation, temperature, feelsLike, forecast);
+    console.log(myObj);
   }
   createWeatherObject();
 }
-getWeather('atlanta');
+
+export { getWeather, myObj };
