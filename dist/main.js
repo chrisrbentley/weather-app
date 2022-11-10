@@ -14,15 +14,23 @@ __webpack_require__.r(__webpack_exports__);
 
 let query;
 const body = document.querySelector('body');
+const myWeather = document.createElement('h1');
 const form = document.createElement('form');
 const input = document.createElement('input');
 const submit = document.createElement('button');
 const wrapper = document.createElement('div');
 const location = document.createElement('h3');
+const conditions = document.createElement('h4');
+const temperature = document.createElement('p');
+const feelsLike = document.createElement('p');
 
+body.appendChild(myWeather);
 body.appendChild(form);
 body.appendChild(wrapper);
 wrapper.appendChild(location);
+wrapper.appendChild(conditions);
+wrapper.appendChild(temperature);
+wrapper.appendChild(feelsLike);
 form.appendChild(input);
 form.appendChild(submit);
 
@@ -34,12 +42,26 @@ submit.type = 'submit';
 
 wrapper.id = 'wrapper';
 
+myWeather.textContent = 'myWeather';
 submit.textContent = 'Submit';
 
-form.addEventListener('submit', (e) => {
+function populateWrapper() {
+  location.textContent = _getWeather__WEBPACK_IMPORTED_MODULE_0__.reqLocation.qLocation;
+  conditions.textContent = _getWeather__WEBPACK_IMPORTED_MODULE_0__.reqLocation.conditions;
+  temperature.textContent = _getWeather__WEBPACK_IMPORTED_MODULE_0__.reqLocation.temperature;
+  feelsLike.textContent = `Feels like ${_getWeather__WEBPACK_IMPORTED_MODULE_0__.reqLocation.feelsLike}`;
+}
+
+async function submitForm() {
   query = input.value;
-  console.log(query);
-  (0,_getWeather__WEBPACK_IMPORTED_MODULE_0__.getWeather)(query);
+  await (0,_getWeather__WEBPACK_IMPORTED_MODULE_0__.getWeather)(query);
+  console.log(_getWeather__WEBPACK_IMPORTED_MODULE_0__.reqLocation);
+  console.log(_getWeather__WEBPACK_IMPORTED_MODULE_0__.reqLocation.temperature);
+  populateWrapper();
+}
+
+form.addEventListener('submit', (e) => {
+  submitForm();
   e.preventDefault();
 });
 
@@ -55,10 +77,10 @@ form.addEventListener('submit', (e) => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "getWeather": () => (/* binding */ getWeather),
-/* harmony export */   "myObj": () => (/* binding */ myObj)
+/* harmony export */   "reqLocation": () => (/* binding */ reqLocation)
 /* harmony export */ });
 // eslint-disable-next-line import/no-mutable-exports
-let myObj;
+let reqLocation;
 
 async function getWeather(location) {
   const response = await fetch(
@@ -66,25 +88,23 @@ async function getWeather(location) {
     { mode: 'cors' },
   );
   const locationData = await response.json();
-  console.log(locationData);
-  console.log(locationData.main, locationData.weather);
 
   class Weather {
-    constructor(qLocation, temperature, feelsLike, forecast) {
+    constructor(qLocation, temperature, feelsLike, conditions) {
       this.qLocation = qLocation;
       this.temperature = temperature;
       this.feelsLike = feelsLike;
-      this.forecast = forecast;
+      this.conditions = conditions;
     }
   }
 
-  async function createWeatherObject() {
+  function createWeatherObject() {
     const qLocation = locationData.name;
     const temperature = Math.round(locationData.main.temp);
     const feelsLike = Math.round(locationData.main.feels_like);
-    const forecast = locationData.weather[0].description;
-    myObj = new Weather(qLocation, temperature, feelsLike, forecast);
-    console.log(myObj);
+    const conditions = locationData.weather[0].description;
+    reqLocation = new Weather(qLocation, temperature, feelsLike, conditions);
+    console.log(reqLocation);
   }
   createWeatherObject();
 }
