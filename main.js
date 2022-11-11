@@ -1,5 +1,4 @@
 /******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./src/UI.js":
@@ -8,6 +7,7 @@
   \*******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _getWeather__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getWeather */ "./src/getWeather.js");
 
@@ -15,6 +15,7 @@ __webpack_require__.r(__webpack_exports__);
 let query;
 const body = document.querySelector('body');
 const myWeather = document.createElement('h1');
+const main = document.createElement('main');
 const form = document.createElement('form');
 const input = document.createElement('input');
 const submit = document.createElement('button');
@@ -22,25 +23,29 @@ const wrapper = document.createElement('div');
 const location = document.createElement('h3');
 const conditions = document.createElement('h4');
 const temperature = document.createElement('p');
-const feelsLike = document.createElement('p');
+const humidity = document.createElement('p');
 
 body.appendChild(myWeather);
-body.appendChild(form);
-body.appendChild(wrapper);
+body.appendChild(main);
+main.appendChild(form);
+main.appendChild(wrapper);
 wrapper.appendChild(location);
 wrapper.appendChild(conditions);
 wrapper.appendChild(temperature);
-wrapper.appendChild(feelsLike);
+wrapper.appendChild(humidity);
 form.appendChild(input);
 form.appendChild(submit);
 
 input.type = 'search';
 input.name = 'q';
 input.id = 'q';
-input.placeholder = 'Enter a location..';
+input.placeholder = 'Enter a city..';
 submit.type = 'submit';
 
 wrapper.id = 'wrapper';
+conditions.id = 'conditions';
+temperature.id = 'temperature';
+humidity.id = 'humidity';
 
 myWeather.textContent = 'myWeather';
 submit.textContent = 'Submit';
@@ -48,8 +53,9 @@ submit.textContent = 'Submit';
 function populateWrapper() {
   location.textContent = _getWeather__WEBPACK_IMPORTED_MODULE_0__.reqLocation.qLocation;
   conditions.textContent = _getWeather__WEBPACK_IMPORTED_MODULE_0__.reqLocation.conditions;
-  temperature.textContent = _getWeather__WEBPACK_IMPORTED_MODULE_0__.reqLocation.temperature;
-  feelsLike.textContent = `Feels like ${_getWeather__WEBPACK_IMPORTED_MODULE_0__.reqLocation.feelsLike}`;
+  temperature.textContent = `${_getWeather__WEBPACK_IMPORTED_MODULE_0__.reqLocation.temperature}°;
+  `;
+  humidity.textContent = `Humidity: ${_getWeather__WEBPACK_IMPORTED_MODULE_0__.reqLocation.humidity}%`;
 }
 
 async function submitForm() {
@@ -58,6 +64,7 @@ async function submitForm() {
   console.log(_getWeather__WEBPACK_IMPORTED_MODULE_0__.reqLocation);
   console.log(_getWeather__WEBPACK_IMPORTED_MODULE_0__.reqLocation.temperature);
   populateWrapper();
+  input.value = '';
 }
 
 form.addEventListener('submit', (e) => {
@@ -74,6 +81,7 @@ form.addEventListener('submit', (e) => {
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "getWeather": () => (/* binding */ getWeather),
@@ -88,12 +96,13 @@ async function getWeather(location) {
     { mode: 'cors' },
   );
   const locationData = await response.json();
+  console.log(locationData);
 
   class Weather {
-    constructor(qLocation, temperature, feelsLike, conditions) {
+    constructor(qLocation, temperature, humidity, conditions) {
       this.qLocation = qLocation;
       this.temperature = temperature;
-      this.feelsLike = feelsLike;
+      this.humidity = humidity;
       this.conditions = conditions;
     }
   }
@@ -101,9 +110,10 @@ async function getWeather(location) {
   function createWeatherObject() {
     const qLocation = locationData.name;
     const temperature = Math.round(locationData.main.temp);
-    const feelsLike = Math.round(locationData.main.feels_like);
+    // eslint-disable-next-line prefer-destructuring
+    const humidity = locationData.main.humidity;
     const conditions = locationData.weather[0].description;
-    reqLocation = new Weather(qLocation, temperature, feelsLike, conditions);
+    reqLocation = new Weather(qLocation, temperature, humidity, conditions);
     console.log(reqLocation);
   }
   createWeatherObject();
@@ -111,6 +121,16 @@ async function getWeather(location) {
 
 
 
+
+/***/ }),
+
+/***/ "./src/styles.css":
+/*!************************!*\
+  !*** ./src/styles.css ***!
+  \************************/
+/***/ (() => {
+
+throw new Error("Module parse failed: Unexpected character '@' (1:0)\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\n> @import url('https://fonts.googleapis.com/css2?family=Sono:wght@300;400;700&display=swap');\n| \n| body {");
 
 /***/ })
 
@@ -141,6 +161,18 @@ async function getWeather(location) {
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -171,14 +203,18 @@ async function getWeather(location) {
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
+"use strict";
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _getWeather__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getWeather */ "./src/getWeather.js");
 /* harmony import */ var _UI__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UI */ "./src/UI.js");
+/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./styles.css */ "./src/styles.css");
+/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_styles_css__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 
