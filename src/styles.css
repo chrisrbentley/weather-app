@@ -1,6 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Sono:wght@300;400;700&display=swap');
+
 body {
   width: 100vw;
   height: 100vh;
   padding: 0;
   margin: 0;
+  background-color: #1e3231;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Sono', sans-serif;
+  color: #e1e1e6;
+}
+
+h1 {
+  padding: 10px;
+  margin: 0;
+  color: #e1e1e6;
+}
+
+main {
+  flex-grow: 1;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  width: 50vw;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+form > input,
+input::placeholder,
+button {
+  background-color: transparent;
+  border: none;
+  padding: 10px 0;
+  color: #e1e1e6;
+  font-family: 'Sono', sans-serif;
+  font-size: 18px;
+}
+
+form > input {
+  outline: none;
+}
+
+form > button {
+  cursor: pointer;
+}
+
+#wrapper {
+  width: 60vw;
+  height: 50vh;
+  background-color: #334d4c;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px 5px #14201f;
+}
+
+#wrapper > h3 {
+  font-size: 2rem;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-transition-delay: 9999s;
+  transition-delay: 9999s;
+}
+
+#conditions,
+#temperature,
+#humidity {
+  font-size: 20px;
 }

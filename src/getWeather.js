@@ -7,12 +7,13 @@ async function getWeather(location) {
     { mode: 'cors' },
   );
   const locationData = await response.json();
+  console.log(locationData);
 
   class Weather {
-    constructor(qLocation, temperature, feelsLike, conditions) {
+    constructor(qLocation, temperature, humidity, conditions) {
       this.qLocation = qLocation;
       this.temperature = temperature;
-      this.feelsLike = feelsLike;
+      this.humidity = humidity;
       this.conditions = conditions;
     }
   }
@@ -20,9 +21,10 @@ async function getWeather(location) {
   function createWeatherObject() {
     const qLocation = locationData.name;
     const temperature = Math.round(locationData.main.temp);
-    const feelsLike = Math.round(locationData.main.feels_like);
+    // eslint-disable-next-line prefer-destructuring
+    const humidity = locationData.main.humidity;
     const conditions = locationData.weather[0].description;
-    reqLocation = new Weather(qLocation, temperature, feelsLike, conditions);
+    reqLocation = new Weather(qLocation, temperature, humidity, conditions);
     console.log(reqLocation);
   }
   createWeatherObject();
