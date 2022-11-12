@@ -49,8 +49,6 @@ function populateWrapper() {
 async function submitForm() {
   query = input.value;
   await getWeather(query);
-  console.log(reqLocation);
-  console.log(reqLocation.temperature);
   populateWrapper();
   input.value = '';
 }
