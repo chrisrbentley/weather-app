@@ -1,4 +1,4 @@
-import { getWeather, reqLocation } from './getWeather';
+import { getWeather, reqLocation, createWeatherObject } from './getWeather';
 
 let query;
 const body = document.querySelector('body');
@@ -49,6 +49,7 @@ function populateWrapper() {
 async function submitForm() {
   query = input.value;
   await getWeather(query);
+  createWeatherObject();
   populateWrapper();
   input.value = '';
 }
