@@ -27,7 +27,6 @@ async function getWeather(location) {
       `https://api.openweathermap.org/data/2.5/weather?q=${location}&limit=5&appid=7a6a3e9c8867bc5ec1c7bac3aea201d9&units=imperial`,
       { mode: 'cors' },
     );
-    console.log(response);
     locationData = await response.json();
   } catch (error) {
     alert('Please enter a valid city.');
