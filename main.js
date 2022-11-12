@@ -536,8 +536,6 @@ function populateWrapper() {
 async function submitForm() {
   query = input.value;
   await (0,_getWeather__WEBPACK_IMPORTED_MODULE_0__.getWeather)(query);
-  console.log(_getWeather__WEBPACK_IMPORTED_MODULE_0__.reqLocation);
-  console.log(_getWeather__WEBPACK_IMPORTED_MODULE_0__.reqLocation.temperature);
   populateWrapper();
   input.value = '';
 }
