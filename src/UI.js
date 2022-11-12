@@ -41,7 +41,7 @@ submit.textContent = 'Submit';
 function populateWrapper() {
   location.textContent = reqLocation.qLocation;
   conditions.textContent = reqLocation.conditions;
-  temperature.textContent = `${reqLocation.temperature}°;
+  temperature.textContent = `${reqLocation.temperature}°
   `;
   humidity.textContent = `Humidity: ${reqLocation.humidity}%`;
 }

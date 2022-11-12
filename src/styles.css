@@ -42,6 +42,7 @@ button {
   color: #e1e1e6;
   font-family: 'Sono', sans-serif;
   font-size: 18px;
+  font-size: 1.125rem;
 }
 
 form > input {
